@@ -13,6 +13,13 @@ class Scraper():
         options.add_argument("headless")
         self.driver = webdriver.Chrome(chrome_options=options)
 
+    def get_sf_num(self, sf):
+        if sf == 'semi-final':
+            return 0
+        if sf == 'semi-final-1':
+            return 1
+        if sf == 'semi-final-2':
+            return 2
 
     def scrape_year(self, contest, contest_round):
 
@@ -74,18 +81,15 @@ class Scraper():
                 c.points_final = points
                 c.points_tele_final = televotes
                 c.points_jury_final = juryvotes 
-            elif contest_round == 'semi-final' or 'semi-final-1':
-                c.running_sf1 = running
-                c.place_sf1 = place
-                c.points_sf1 = points
-                c.points_tele_sf1 = televotes
-                c.points_jury_sf1 = juryvotes 
-            elif contest_round == 'semi-final-2':
-                c.running_sf2 = running
-                c.place_sf2 = place
-                c.points_sf2 = points
-                c.points_tele_sf2 = televotes
-                c.points_jury_sf2 = juryvotes 
+            else:
+                c.sf_num = self.get_sf_num(contest_round)
+                c.running_sf = running
+                c.place_sf = place
+                c.points_sf = points
+                c.points_tele_sf = televotes
+                c.points_jury_sf = juryvotes
+
+            print(contest.year, c.country.name, c.sf_num, contest_round)
 
         # Create the voting table for the contest
         voting_grid = soup.find('div', {'id': 'voting_grid'})
@@ -124,13 +128,11 @@ class Scraper():
 
                 votes = Votes(contest.year, contest_round, voting_dict)
                 contest.votes[contest_round] = votes
-
+            
         return contest
 
     def scrape_misc(self, contest):
         for _, c in contest.contestants.items():
-
-            country = c.country.name
 
             # Get contestant's page url
             url = 'https://eurovisionworld.com' + c.page_url

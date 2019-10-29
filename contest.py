@@ -34,8 +34,9 @@ class Contest():
         for _, c in self.contestants.items():
             l.append([self.year, c.country.code,
                       c.country.name, c.performer, c.song,
-                      c.running_final, c.running_sf1, c.running_sf2,
-                      c.place_final, c.points_final, c.place_sf1, c.points_sf1, c.place_sf2, c.points_sf2,
-                      c.points_tele_final, c.points_jury_final, c.points_tele_sf1, c.points_jury_sf1, c.points_tele_sf2, c.points_jury_sf2,
+                      c.sf_num,
+                      c.running_final, c.running_sf,
+                      c.place_final, c.points_final, c.place_sf, c.points_sf,
+                      c.points_tele_final, c.points_jury_final, c.points_tele_sf, c.points_jury_sf,
                       c.lyrics, c.youtube_url])
         return l
