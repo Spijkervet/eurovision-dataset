@@ -106,12 +106,12 @@ class Scraper():
                 cols = row.find_all('td')
                 country_name = cols[2].text
                 country_id = cols[2]['trid']
-                total_points = cols[3].text
+                # total_points = cols[3].text
 
                 points_cols = cols[4:]
                 for p in points_cols:
-                    from_country_id = p['trid']
-                    to_country_id = p['tdid']
+                    from_country_id = p['tdid']
+                    to_country_id = p['trid']
                     if not p.text:
                         voting_dict[from_country_id][to_country_id] = 0
                     else:
