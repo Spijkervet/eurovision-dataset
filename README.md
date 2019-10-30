@@ -17,7 +17,8 @@ This will create a `contestants.csv` and `votes.csv` file.
 To explore the data, an example `notebook.ipynb` is created. This can be opened with `jupyter notebook`.
 
 ## Data description
-`contestants.csv`
+### contestants.csv
+
 | column | description |  
 |---|---|
 | year | contest year |
@@ -39,8 +40,7 @@ To explore the data, an example `notebook.ipynb` is created. This can be opened 
 | lyrics | lyrics of the song |
 | youtube_url | url to video on YouTube |
 
-
-`votes.csv`
+### votes.csv
 | column | description |  
 |---|---|
 | year | contest year |
