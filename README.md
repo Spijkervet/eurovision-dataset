@@ -14,6 +14,8 @@ python3 main.py --start 1956 --end 2019
 
 This will create a `contestants.csv` and `votes.csv` file.
 
+To explore the data, an example `notebook.ipynb` is created. This can be opened with `jupyter notebook`.
+
 ## Data description
 `contestants.csv`
 | column | description |  
