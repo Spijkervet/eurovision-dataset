@@ -26,7 +26,7 @@ class Contest():
             for from_country, _countries in v.table.items():
                 for to_country, points in _countries.items():
                     l.append([self.year, contest_round, from_country, to_country, self.get_country_name(
-                        from_country), self.get_country_name(to_country), points])
+                        from_country), self.get_country_name(to_country), points[0], points[1], points[2]])
         return l
 
     def contestants_to_list(self):
@@ -38,5 +38,6 @@ class Contest():
                       c.running_final, c.running_sf,
                       c.place_final, c.points_final, c.place_sf, c.points_sf,
                       c.points_tele_final, c.points_jury_final, c.points_tele_sf, c.points_jury_sf,
+                      ';'.join(c.composers), ';'.join(c.lyricists),
                       c.lyrics, c.youtube_url])
         return l

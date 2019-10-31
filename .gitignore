@@ -11,4 +11,6 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 .ipynb_checkpoints
-*.csv
+*.zip
+audio
+*.log

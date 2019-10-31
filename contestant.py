@@ -14,6 +14,8 @@ class Contestant():
         self.performer = performer
         self.song = song
         self.page_url = page_url
+        self.composers = []
+        self.lyricists = [] 
         self.lyrics = None
         self.youtube_url = None
         

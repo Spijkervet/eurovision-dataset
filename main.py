@@ -34,3 +34,5 @@ if __name__ == "__main__":
 
         contest = get_contest(y, rounds)
         to_csv(contest)
+    
+    scraper.driver.quit()
