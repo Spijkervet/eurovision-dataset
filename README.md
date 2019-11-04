@@ -1,5 +1,5 @@
 # Eurovision Song Contest Dataset
-This repository contains code to create a dataset containing the competition ranking, country-to-country votes, song metadata, lyrics and links to video and audio data of all the songs that have competed in the Eurovision Song Contests.
+This repository contains code to create a dataset containing the competition ranking, country-to-country votes, song metadata, lyrics and links to video and audio data of all the songs that have competed in the Eurovision Song Contests. The dataset is scraped from the [EurovisionWorld](https://eurovisionworld.com) fansite.
 
 ## Usage
 At this moment, scraping the data only works with the [WebDriver for Chrome](https://chromedriver.chromium.org/downloads), along with the Selenium Python package (`selenium`). Follow the instructions to setup the WebDriver [here](https://chromedriver.chromium.org/getting-started). The project's dependencies can be installed using:
