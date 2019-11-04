@@ -1,5 +1,5 @@
 # Eurovision Song Contest Dataset
-This repository contains code to create a dataset containing the competition ranking, country-to-country votes, song metadata, lyrics and video/audio data of all the songs that have compated in the Eurovision Song Contests.
+This repository contains code to create a dataset containing the competition ranking, country-to-country votes, song metadata, lyrics and links to video and audio data of all the songs that have competed in the Eurovision Song Contests.
 
 ## Usage
 At this moment, scraping the data only works with the [WebDriver for Chrome](https://chromedriver.chromium.org/downloads), along with the Selenium Python package (`selenium`). Follow the instructions to setup the WebDriver [here](https://chromedriver.chromium.org/getting-started). The project's dependencies can be installed using:
@@ -22,8 +22,8 @@ To explore the data, an example `notebook.ipynb` is created. This can be opened 
 | column | description |  
 |---|---|
 | year | contest year |
-| from_country_id | (country id of contestant | 
-| from_country  | country name of contestant |
+| to_country_id | (country id of contestant | 
+| to_country  | country name of contestant |
 | performer | artist |
 | song | title of the contestant's song |
 | sf_num | participated in semi-final 1, 2 or 0 (from 2004-2008 there was only one semi-final |
