@@ -19,7 +19,7 @@ def to_csv(contest):
 
     all_contestants = contest.contestants_to_list()
     df = pd.DataFrame(all_contestants,
-                      columns=['year', 'from_country_id', 'from_country', 'performer', 'song', 'sf_num',
+                      columns=['year', 'to_country_id', 'to_country', 'performer', 'song', 'sf_num',
                                'running_final', 'running_sf',
                                'place_final', 'points_final', 'place_sf', 'points_sf',
                                'points_tele_final', 'points_jury_final', 'points_tele_sf', 'points_jury_sf',

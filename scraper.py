@@ -142,6 +142,9 @@ class Scraper():
             artist = song_artist.find('span').text.rstrip()
             song = song.replace(artist, '').rstrip()
             points = points.text.rstrip()
+            if type(points) != int:
+                points = None
+                
             running = running.text.rstrip()
             page_url = song_artist.find('a')['href']
 
@@ -176,7 +179,7 @@ class Scraper():
                 c.points_tele_sf = televotes
                 c.points_jury_sf = juryvotes
 
-            print(contest.year, c.country.name, c.sf_num, contest_round)
+            print(contest.year, c.country.name, contest_round)
 
         # Tele/jury votes were implemented in 2016
         tele_votes = None
