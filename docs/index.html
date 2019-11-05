@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+        
+        <style>
+
+    html body {
+        font-family: 'Raleway', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: black;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="./css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.59.1" />
+        
+            <link href="/index.xml" rel="alternate" type="application/rss&#43;xml" title="Eurovision Song Contest Dataset" />
+            <link href="/index.xml" rel="feed" type="application/rss&#43;xml" title="Eurovision Song Contest Dataset" />
+        
+
+        
+
+        
+            <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+        
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </head>
+
+    <body>
+        
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand visible-xs" href="#"></a>
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                        </ul>
+                    
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:janne.spijkervet@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/spijkervet/eurovision_dataset"><i class="fa fa-github"></i></a></li>
+                            
+                        </ul>
+                    
+                </div>
+            </div>
+        </nav>
+
+
+<main>
+    <div class="intro">
+        
+        <h1>Eurovision Song Contest Dataset</h1>
+        <h2>A freely-available dataset containing audio features, metadata, contest ranking and voting data of 1562 songs that have competed in the Eurovision Song Contests.</h2>
+         <div class="homepage-content text-justify">
+
+<p>Every <b>year</b>, the dataset is updated with the contest&rsquo;s results. This release contains the audio features, contestant metadata and voting data of 1562 entries that participated in the Eurovision Song Contest from its first occurrence in 1956 until now.</p>
+
+<p>The metadata and voting data are provided by the <a href="https://eurovisionworld.com">EurovisionWorld</a> fansite.</p>
+
+<div>
+<!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/spijkervet/eurovision_dataset" data-icon="octicon-star" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
+
+<!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/spijkervet/eurovision_dataset/releases" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Download</a>
+</div>
+
+<h3 id="using-the-dataset-in-your-research-paper">Using the dataset in your research paper?</h3>
+
+<p>Please contact janne [dot] spijkervet [at] gmail [dot] com</p>
+
+<p><br/>
+<br/>
+<br/>
+<br/></p>
+
+<h2 id="how-to-get-started">How to get started</h2>
+
+<p>To get an initial idea of the dataset, an example Jupyter Notebook is created in the <code>examples</code> directory. This can be opened with <code>jupyter notebook</code>.</p>
+
+<h2 id="data-description">Data description</h2>
+
+<p>The competition ranking is provided for both finals and semi-finals. The country-to-country voting data contains 47007 voting activities, and is seperated by jury- and televoting when applicable.</p>
+
+<h3 id="contestants-csv">contestants.csv</h3>
+
+<table>
+<thead>
+<tr>
+<th>column</th>
+<th>description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>year</td>
+<td>contest year</td>
+</tr>
+
+<tr>
+<td>to_country_id</td>
+<td>(country id of contestant</td>
+</tr>
+
+<tr>
+<td>to_country</td>
+<td>country name of contestant</td>
+</tr>
+
+<tr>
+<td>performer</td>
+<td>artist</td>
+</tr>
+
+<tr>
+<td>song</td>
+<td>title of the contestant&rsquo;s song</td>
+</tr>
+
+<tr>
+<td>sf_num</td>
+<td>participated in semi-final 1, 2 or 0 (from 2004-2008 there was only one semi-final</td>
+</tr>
+
+<tr>
+<td>running_final</td>
+<td>order in the broadcast of the contest&rsquo;s final</td>
+</tr>
+
+<tr>
+<td>running_sf</td>
+<td>order in the broadcast of the contest&rsquo;s semi-final</td>
+</tr>
+
+<tr>
+<td>place_final</td>
+<td>place in the final</td>
+</tr>
+
+<tr>
+<td>points_final</td>
+<td>points in the final</td>
+</tr>
+
+<tr>
+<td>place_sf</td>
+<td>place in the semi-final</td>
+</tr>
+
+<tr>
+<td>points_sf</td>
+<td>points in the semi-final</td>
+</tr>
+
+<tr>
+<td>points_tele_final</td>
+<td>televoting points in the contest&rsquo;s final</td>
+</tr>
+
+<tr>
+<td>points_jury_final</td>
+<td>juryvoting points in the contest&rsquo;s final</td>
+</tr>
+
+<tr>
+<td>points_tele_sf</td>
+<td>televoting points in the contest&rsquo;s semi-final</td>
+</tr>
+
+<tr>
+<td>points_jury_sf</td>
+<td>juryvoting points in the contest&rsquo;s semi-final</td>
+</tr>
+
+<tr>
+<td>lyrics</td>
+<td>lyrics of the song</td>
+</tr>
+
+<tr>
+<td>youtube_url</td>
+<td>url to video on YouTube</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="votes-csv">votes.csv</h3>
+
+<table>
+<thead>
+<tr>
+<th>column</th>
+<th>description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>year</td>
+<td>contest year</td>
+</tr>
+
+<tr>
+<td>round</td>
+<td>final, semi-final</td>
+</tr>
+
+<tr>
+<td>from_country_id</td>
+<td>country id of the country giving points</td>
+</tr>
+
+<tr>
+<td>to_country_id</td>
+<td>country id of the country receiving points</td>
+</tr>
+
+<tr>
+<td>from_country</td>
+<td>country name of the country giving points</td>
+</tr>
+
+<tr>
+<td>to_country</td>
+<td>country name of the country receiving points</td>
+</tr>
+
+<tr>
+<td>points</td>
+<td>number of points given</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="replication">Replication</h2>
+
+<p>To replicate the dataset, a WebDriver for either Chrome, Firefox, or Safari is required, e.g. the <a href="https://chromedriver.chromium.org/downloads">WebDriver for Chrome</a>, along with the Selenium Python package (<code>selenium</code>). Follow the instructions to setup the WebDriver <a href="https://chromedriver.chromium.org/getting-started">here</a>. The project&rsquo;s dependencies can be installed using:</p>
+
+<pre><code>pip3 install -r requirements.txt
+</code></pre>
+
+<p>Use the following command to extact the data of all Eurovision Song Contests between 1956 and 2019:</p>
+
+<pre><code>python3 main.py --start 1956 --end 2019
+</code></pre>
+
+<p>This will create a <code>contestants.csv</code> and <code>votes.csv</code> file.</p>
+</div> 
+    </div>
+</main>
+
+

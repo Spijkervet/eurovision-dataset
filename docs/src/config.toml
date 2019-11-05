@@ -1,0 +1,38 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "Eurovision Song Contest Dataset"
+theme = "minimal"
+disqusShortname = "" # delete this to disable disqus comments
+googleAnalytics = ""
+
+[params]
+    author = "Janne Spijkervet"
+    description = "A freely-available dataset containing audio features, metadata, contest ranking and voting data of 1562 songs that have competed in the Eurovision Song Contests."
+    githubUsername = "spijkervet"
+    accent = "black"
+    showBorder = true
+    backgroundColor = "white"
+    font = "Raleway" # should match the name on Google Fonts!
+    highlight = true
+    highlightStyle = "default"
+    highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift"]
+
+[[menu.main]]
+    url = "/"
+    name = "Home"
+    weight = 1
+
+
+# Social icons to be shown on the right-hand side of the navigation bar.
+# The "name" field should match the name of the icon in Font Awesome.
+# The list of available icons can be found at http://fontawesome.io/icons.
+
+[[menu.icon]]
+    url = "mailto:janne.spijkervet@gmail.com"
+    name = "envelope-o"
+    weight = 1
+
+[[menu.icon]]
+    url = "https://github.com/spijkervet/eurovision_dataset"
+    name = "github"
+    weight = 2
