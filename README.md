@@ -1,22 +1,15 @@
 # Eurovision Song Contest Dataset
-This repository contains code to create a dataset containing the competition ranking, country-to-country votes, song metadata, lyrics and links to video and audio data of all the songs that have competed in the Eurovision Song Contests. The dataset is scraped from the [EurovisionWorld](https://eurovisionworld.com) fansite.
+The Eurovision Song Contest is a freely-available dataset containing audio features, metadata, contest ranking and voting data of 1562 songs that have competed in the Eurovision Song Contests.
 
-## Usage
-At this moment, scraping the data only works with the [WebDriver for Chrome](https://chromedriver.chromium.org/downloads), along with the Selenium Python package (`selenium`). Follow the instructions to setup the WebDriver [here](https://chromedriver.chromium.org/getting-started). The project's dependencies can be installed using:
-```
-pip3 install -r requirements.txt
-```
+Every year, the dataset is updated with the contest's results.
+The metadata and voting data are provided by the [EurovisionWorld](https://eurovisionworld.com) fansite.
 
-Use the following command to extact the data of all Eurovision Song Contests between 1956 and 2019:
-```
-python3 main.py --start 1956 --end 2019
-```
-
-This will create a `contestants.csv` and `votes.csv` file.
-
+## How to get started
 To explore the data, an example `notebook.ipynb` is created. This can be opened with `jupyter notebook`.
 
 ## Data description
+The competition ranking is provided for both finals and semi-finals. The country-to-country voting data is seperated by jury- and televoting when applicable.
+
 ### contestants.csv
 
 | column | description |  
@@ -50,3 +43,18 @@ To explore the data, an example `notebook.ipynb` is created. This can be opened 
 | from_country | country name of the country giving points |
 | to_country | country name of the country receiving points |
 | points | number of points given |
+
+
+## Replication
+To replicate the dataset, a WebDriver for either Chrome, Firefox, or Safari is required, e.g. the [WebDriver for Chrome](https://chromedriver.chromium.org/downloads), along with the Selenium Python package (`selenium`). Follow the instructions to setup the WebDriver [here](https://chromedriver.chromium.org/getting-started). The project's dependencies can be installed using:
+```
+pip3 install -r requirements.txt
+```
+
+Use the following command to extact the data of all Eurovision Song Contests between 1956 and 2019:
+```
+python3 main.py --start 1956 --end 2019
+```
+
+This will create a `contestants.csv` and `votes.csv` file.
+
