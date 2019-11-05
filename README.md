@@ -1,14 +1,24 @@
 # Eurovision Song Contest Dataset
 The Eurovision Song Contest is a freely-available dataset containing audio features, metadata, contest ranking and voting data of 1562 songs that have competed in the Eurovision Song Contests.
 
-Every year, the dataset is updated with the contest's results.
+Every <b>year</b>, the dataset is updated with the contest's results. This release contains the audio features, contestant metadata and voting data of 1562 entries that participated in the Eurovision Song Contest from its first occurrence in 1956 until now.
+
 The metadata and voting data are provided by the [EurovisionWorld](https://eurovisionworld.com) fansite.
 
+### Using the dataset in your research paper?
+Please contact janne [dot] spijkervet [at] gmail [dot] com
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+
 ## How to get started
-To explore the data, an example `notebook.ipynb` is created. This can be opened with `jupyter notebook`.
+To get an initial idea of the dataset, an example Jupyter Notebook is created in the `examples` directory. This can be opened with `jupyter notebook`.
 
 ## Data description
-The competition ranking is provided for both finals and semi-finals. The country-to-country voting data is seperated by jury- and televoting when applicable.
+The competition ranking is provided for both finals and semi-finals. The country-to-country voting data contains 47007 voting activities, and is seperated by jury- and televoting when applicable.
 
 ### contestants.csv
 
