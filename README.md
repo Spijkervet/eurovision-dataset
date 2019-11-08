@@ -11,11 +11,10 @@ Please contact janne [dot] spijkervet [at] gmail [dot] com
 
 <br/>
 <br/>
-<br/>
-<br/>
 
 ## How to get started
 To get an initial idea of the dataset, an example Jupyter Notebook is created in the `examples` directory. This can be opened with `jupyter notebook`.
+
 
 ## Data description
 The competition ranking is provided for both finals and semi-finals. The country-to-country voting data contains 47007 voting activities, and is separated by jury- and televoting after it was introduced in 2016.
