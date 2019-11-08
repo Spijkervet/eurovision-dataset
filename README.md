@@ -1,7 +1,7 @@
 # Eurovision Song Contest Dataset
 The Eurovision Song Contest is a freely-available dataset containing audio features, metadata, contest ranking and voting data of 1562 songs that have competed in the Eurovision Song Contests.
 
-Every <b>year</b>, the dataset is updated with the contest's results. This release contains the audio features, contestant metadata and voting data of 1562 entries that participated in the Eurovision Song Contest from its first occurrence in 1956 until now.
+Every <b>year</b>, the dataset is updated with the contest's results. This release contains the contestant metadata and voting data of 1562 entries that participated in the Eurovision Song Contest from its first occurrence in 1956 until now. The corresponding audio for every song can be streamed through YouTube.
 
 The metadata and voting data are provided by the [EurovisionWorld](https://eurovisionworld.com) fansite.
 
@@ -18,7 +18,7 @@ Please contact janne [dot] spijkervet [at] gmail [dot] com
 To get an initial idea of the dataset, an example Jupyter Notebook is created in the `examples` directory. This can be opened with `jupyter notebook`.
 
 ## Data description
-The competition ranking is provided for both finals and semi-finals. The country-to-country voting data contains 47007 voting activities, and is seperated by jury- and televoting when applicable.
+The competition ranking is provided for both finals and semi-finals. The country-to-country voting data contains 47007 voting activities, and is separated by jury- and televoting after it was introduced in 2016.
 
 ### contestants.csv
 
@@ -56,7 +56,7 @@ The competition ranking is provided for both finals and semi-finals. The country
 
 
 ## Replication
-To replicate the dataset, a WebDriver for either Chrome, Firefox, or Safari is required, e.g. the [WebDriver for Chrome](https://chromedriver.chromium.org/downloads), along with the Selenium Python package (`selenium`). Follow the instructions to setup the WebDriver [here](https://chromedriver.chromium.org/getting-started). The project's dependencies can be installed using:
+To replicate the dataset, a WebDriver for either Chrome, Firefox, or Safari is required, e.g. the [WebDriver for Chrome](https://chromedriver.chromium.org/downloads), along with the Selenium Python package (`pip3 install selenium`). Follow the instructions to setup the WebDriver [here](https://chromedriver.chromium.org/getting-started). The project's dependencies can be installed using:
 ```
 pip3 install -r requirements.txt
 ```
