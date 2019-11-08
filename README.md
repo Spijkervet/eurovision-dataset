@@ -5,6 +5,9 @@ Every <b>year</b>, the dataset is updated with the contest's results. This relea
 
 The metadata and voting data are provided by the [EurovisionWorld](https://eurovisionworld.com) fansite.
 
+### Downloading the dataset
+The dataset can be downloaded [here](https://github.com/Spijkervet/eurovision_dataset/releases). To replicate it, follow the instructions at the bottom of the readme.
+
 ### Using the dataset in your research paper?
 Please contact janne [dot] spijkervet [at] gmail [dot] com
 
