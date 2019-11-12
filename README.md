@@ -18,8 +18,13 @@ Please contact janne [dot] spijkervet [at] gmail [dot] com
 ## How to get started
 To get an initial idea of the dataset, an example Jupyter Notebook is created in the `examples` directory. This can be opened with `jupyter notebook`. To replacite the dataset, see below or:
 
+### run.sh
+The `run.sh` file makes it easy to either replicate the full dataset or download the latest version and extract the audio features from all the songs. By default, `sh run.sh` will run the scraper from the local Python environment. With `sh run.sh docker`, a Docker container is used to run the scraper.
+
+By supplying an `audio` flag, e.g. `sh run.sh docker audio`, the audio from the YouTube streams in `contestants.csv` will be collected.
+
 ### Using Docker
-Run the `run.sh` file to build the Dockerfile and run the `main.py` from within the container, no additional setup should be necessary. This will replicate the dataset, both the `contestants.csv` and `votes.csv` files.
+Run `sh run.sh docker` to build the Dockerfile and run the `main.py` from within the container, no additional setup should be necessary. This will replicate the dataset, both the `contestants.csv` and `votes.csv` files.
 
 
 ## Data description
@@ -61,7 +66,7 @@ The competition ranking is provided for both finals and semi-finals. The country
 
 
 ## Replication
-It is recommended to use Docker by running the `run.sh` file.
+It is recommended to use Docker by running `sh run.sh docker`, or use a local installation by just invoking `sh run.sh`. To also obtain the audio, run either `sh run.sh audio` or `sh run.sh docker audio`.
 
 To replicate the dataset, a WebDriver for either Chrome, Firefox, or Safari is required, e.g. the [WebDriver for Chrome](https://chromedriver.chromium.org/downloads), along with the Selenium Python package (`pip3 install selenium`). Follow the instructions to setup the WebDriver [here](https://chromedriver.chromium.org/getting-started). The project's dependencies can be installed using:
 ```
