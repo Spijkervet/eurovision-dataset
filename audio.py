@@ -16,7 +16,7 @@ for i, r in contestants.iterrows():
     youtube_url = r['youtube_url']
     if youtube_url:
         fn = '{}_{}_{}'.format(
-            r['from_country'], r['song'], r['performer'])
+            r['to_country'], r['song'], r['performer'])
 
         # Skip if file already exists
         fp = os.path.join(destination_dir, fn)
