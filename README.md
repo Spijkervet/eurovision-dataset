@@ -11,6 +11,7 @@ The dataset can be downloaded [here](https://github.com/Spijkervet/eurovision_da
 #### Audio
 With the `contestants.csv` in the same folder as the `audio.py` file, the YouTube audio streams of all songs can be collected by running `python3 audio.py`. Alternatively, `sh run.sh audio` can be used to use a Docker container to scrape the streams.
 
+
 ### Using the dataset in your research paper?
 Please contact janne [dot] spijkervet [at] gmail [dot] com
 
@@ -26,6 +27,12 @@ By supplying an `audio` flag, e.g. `sh run.sh docker audio`, the audio from the 
 ### Using Docker
 Run `sh run.sh docker` to build the Dockerfile and run the `main.py` from within the container, no additional setup should be necessary. This will replicate the dataset, both the `contestants.csv` and `votes.csv` files.
 
+### Audio Features
+The audio features can be extracted once all the audio is present in the `audio` folder using:
+```
+sh audio_features.sh
+```
+This will launch a Docker container with Essentia's stream music extractor installed. Alternatively, `audio_features.py` can be run given Essentia's extractor is installed in the PATH environment.
 
 ## Data description
 The competition ranking is provided for both finals and semi-finals. The country-to-country voting data contains 47007 voting activities, and is separated by jury- and televoting after it was introduced in 2016.

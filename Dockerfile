@@ -19,3 +19,8 @@ RUN pip install --upgrade pip
 
 # install selenium
 RUN pip install selenium bs4 pandas youtube-dl
+
+# essentia music extractor
+RUN wget ftp://ftp.acousticbrainz.org/pub/acousticbrainz/essentia-extractor-v2.1_beta2-linux-x86_64.tar.gz
+RUN tar -xvf essentia-extractor-v2.1_beta2-linux-x86_64.tar.gz
+RUN mv streaming_extractor_music /bin
