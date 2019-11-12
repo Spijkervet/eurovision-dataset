@@ -15,11 +15,11 @@ With the `contestants.csv` in the same folder as the `audio.py` file, the YouTub
 Please contact janne [dot] spijkervet [at] gmail [dot] com
 
 
-<br/>
-<br/>
-
 ## How to get started
-To get an initial idea of the dataset, an example Jupyter Notebook is created in the `examples` directory. This can be opened with `jupyter notebook`.
+To get an initial idea of the dataset, an example Jupyter Notebook is created in the `examples` directory. This can be opened with `jupyter notebook`. To replacite the dataset, see below or:
+
+### Using Docker
+Run the `run.sh` file to build the Dockerfile and run the `main.py` from within the container, no additional setup should be necessary.
 
 
 ## Data description
@@ -61,6 +61,8 @@ The competition ranking is provided for both finals and semi-finals. The country
 
 
 ## Replication
+It is recommended to use Docker by running the `run.sh` file.
+
 To replicate the dataset, a WebDriver for either Chrome, Firefox, or Safari is required, e.g. the [WebDriver for Chrome](https://chromedriver.chromium.org/downloads), along with the Selenium Python package (`pip3 install selenium`). Follow the instructions to setup the WebDriver [here](https://chromedriver.chromium.org/getting-started). The project's dependencies can be installed using:
 ```
 pip3 install -r requirements.txt
