@@ -9,7 +9,7 @@ The metadata and voting data are provided by the [EurovisionWorld](https://eurov
 The dataset can be downloaded [here](https://github.com/Spijkervet/eurovision_dataset/releases). To replicate it, follow the instructions at the bottom of the readme.
 
 #### Audio
-With the `contestants.csv` in the same folder as the `audio.py` file, the YouTube audio streams of all songs can be collected by running `python3 audio.py`.
+With the `contestants.csv` in the same folder as the `audio.py` file, the YouTube audio streams of all songs can be collected by running `python3 audio.py`. Alternatively, `sh run.sh audio` can be used to use a Docker container to scrape the streams.
 
 ### Using the dataset in your research paper?
 Please contact janne [dot] spijkervet [at] gmail [dot] com
@@ -19,7 +19,7 @@ Please contact janne [dot] spijkervet [at] gmail [dot] com
 To get an initial idea of the dataset, an example Jupyter Notebook is created in the `examples` directory. This can be opened with `jupyter notebook`. To replacite the dataset, see below or:
 
 ### Using Docker
-Run the `run.sh` file to build the Dockerfile and run the `main.py` from within the container, no additional setup should be necessary.
+Run the `run.sh` file to build the Dockerfile and run the `main.py` from within the container, no additional setup should be necessary. This will replicate the dataset, both the `contestants.csv` and `votes.csv` files.
 
 
 ## Data description
