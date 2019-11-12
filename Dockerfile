@@ -4,7 +4,7 @@ FROM python:3.7
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
 RUN apt-get -y update
-RUN apt-get install -y google-chrome-stable
+RUN apt-get install -y google-chrome-stable ffmpeg
 
 # install chromedriver
 RUN apt-get install -yqq unzip
@@ -18,4 +18,4 @@ ENV DISPLAY=:99
 RUN pip install --upgrade pip
 
 # install selenium
-RUN pip install -r requirements.txt
+RUN pip install selenium bs4 pandas youtube-dl
