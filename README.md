@@ -19,7 +19,7 @@ Please contact janne [dot] spijkervet [at] gmail [dot] com
 To get an initial idea of the dataset, an example Jupyter Notebook is created in the `examples` directory. This can be opened with `jupyter notebook`. To replacite the dataset, see below or:
 
 ### Using Docker
-Run the `run.sh` file to build the Dockerfile and run the `main.py` from within the container, no additional setup should be necessary.
+Run the `run.sh` file to build the Dockerfile and run the `main.py` from within the container, no additional setup should be necessary. This will replicate the dataset, both the `contestants.csv` and `votes.csv` files.
 
 
 ## Data description
