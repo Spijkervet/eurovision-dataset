@@ -47,11 +47,11 @@ The competition ranking is provided for both finals and semi-finals. The country
 | column | description |  
 |---|---|
 | year | contest year |
-| to_country_id | (country id of contestant | 
+| to_country_id | country id of contestant | 
 | to_country  | country name of contestant |
 | performer | artist |
 | song | title of the contestant's song |
-| sf_num | participated in semi-final 1, 2 or 0 (from 2004-2008 there was only one semi-final |
+| sf_num | participated in semi-final 1, 2 or 0 (from 2004-2008 there was only one semi-final) |
 | running_final | order in the broadcast of the contest's final |
 | running_sf | order in the broadcast of the contest's semi-final |
 | place_final | place in the final |
