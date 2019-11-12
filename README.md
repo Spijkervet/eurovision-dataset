@@ -21,7 +21,7 @@ To get an initial idea of the dataset, an example Jupyter Notebook is created in
 ### run.sh
 The `run.sh` file makes it easy to either replicate the full dataset or download the latest version and extract the audio features from all the songs. By default, `sh run.sh` will run the scraper from the local Python environment. With `sh run.sh docker`, a Docker container is used to run the scraper.
 
-By supplying an `audio` flag, e.g. `sh run.sh docker audio`, only the audio from the YouTube stream will be collected.
+By supplying an `audio` flag, e.g. `sh run.sh docker audio`, the audio from the YouTube streams in `contestants.csv` will be collected.
 
 ### Using Docker
 Run `sh run.sh docker` to build the Dockerfile and run the `main.py` from within the container, no additional setup should be necessary. This will replicate the dataset, both the `contestants.csv` and `votes.csv` files.
