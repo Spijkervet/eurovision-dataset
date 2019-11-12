@@ -1,0 +1,1 @@
+docker run -it -w /usr/workspace -v $(pwd):/usr/workspace janewilde/python-chromedriver:latest python3 main.py
