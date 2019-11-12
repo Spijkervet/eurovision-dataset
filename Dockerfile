@@ -18,4 +18,4 @@ ENV DISPLAY=:99
 RUN pip install --upgrade pip
 
 # install selenium
-RUN pip install selenium bs4 pandas
+RUN pip install -r requirements.txt
