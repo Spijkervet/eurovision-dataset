@@ -66,10 +66,12 @@ class Scraper():
 
         # Create the voting table for the contest
         voting_grid = self.soup.find('div', {'id': 'voting_grid'})
+        if not voting_grid.contents:
+            return votes_dict
 
         # Switch to other table for tele/jury voting
         if table_data_attrib:
-            btn = self.driver.find_element_by_xpath('//button[@data-grid="{}"]'.format(table_data_attrib))
+            btn = self.driver.find_element_by_xpath('//button[@data-button="{}"]'.format(table_data_attrib))
             btn.send_keys(keys.Keys.SPACE)
 
             soup = BeautifulSoup(self.driver.page_source, features='html.parser')
@@ -86,17 +88,20 @@ class Scraper():
                     img = c.find('img')
                     if img:
                         countries[c['tdid']] = img['alt']
-            
+                    
+                    if 'data-from' in c.attrs:
+                        countries[c['data-from']] = c['data-from']
+
             for row in voting_grid.find('tbody').findAll('tr'):
                 cols = row.find_all('td')
                 country_name = cols[2].text
-                country_id = cols[2]['trid']
+                country_id = cols[2]['data-to']
                 # total_points = cols[3].text
 
                 points_cols = cols[4:]
                 for p in points_cols:
-                    from_country_id = p['tdid']
-                    to_country_id = p['trid']
+                    from_country_id = p['data-from']
+                    to_country_id = p['data-to']
                     if not p.text:
                         votes_dict[from_country_id][to_country_id] = 0
                     else:
@@ -119,7 +124,6 @@ class Scraper():
 
         self.driver.get(url)
         self.soup = BeautifulSoup(self.driver.page_source, features='html.parser')
-
         voting_table = self.soup.find('div', {'id': 'voting_table'})
         if not voting_table:
             return None

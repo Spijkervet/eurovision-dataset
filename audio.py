@@ -20,23 +20,32 @@ for i, r in contestants.iterrows():
 
         # Skip if file already exists
         fp = os.path.join(destination_dir, fn)
-        if os.path.exists(fp + '.mp3'):
+        if not os.path.exists(fp + '.mp3'):
+
+            ydl_opts = {
+                'outtmpl': fp + '.%(ext)s',
+                'format': 'bestaudio/best',
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                }],
+            }
+
+            try:
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([youtube_url])
+            except Exception as e:
+                print(e)
+                pass
+        else:
             print('{} already exists'.format(fp))
-            continue
+        
 
-        ydl_opts = {
-            'outtmpl': fp + '.%(ext)s',
-            'format': 'bestaudio/best',
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }],
-        }
-
-        try:
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([youtube_url])
-        except Exception as e:
-            print(e)
-            pass
+        # studio_rec_dir = os.path.join(destination_dir, "studio_recording")
+        # if not os.path.exists(studio_rec_dir):
+        #     os.makedirs(studio_rec_dir)
+        
+        # # Additionally, try non-live versions:
+        # query = f"{r['song']} {r['performer']}"
+        # subprocess.call(["spotdl", "-f", studio_rec_dir, "--song", query])

@@ -16,3 +16,4 @@ pip-selfcheck.json
 audio
 audio_features
 *.log
+env

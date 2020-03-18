@@ -19,7 +19,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Eurovision Data Scraper')
     parser.add_argument('--start', type=int, default=1956,
                         help='Start year range of the Eurovision Song Contest')
-    parser.add_argument('--end', type=int, default=2019,
+    parser.add_argument('--end', type=int, default=2020,
                         help='End year range of the Eurovision Song Contest')
     args = parser.parse_args()
 
