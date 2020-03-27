@@ -17,3 +17,5 @@ audio
 audio_features
 *.log
 env
+votes.csv
+contestants.csv

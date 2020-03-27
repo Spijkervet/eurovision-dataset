@@ -148,10 +148,23 @@ class Scraper():
             artist = song_artist.find('span').text.rstrip()
             song = song.replace(artist, '').rstrip()
             points = points.text.rstrip()
-            if type(points) != int:
-                points = None
-                
             running = running.text.rstrip()
+
+            if not place.isdigit():
+                place = None
+
+            if not points.isdigit():
+                points = None
+            
+            if not running.isdigit():
+                running = None
+
+            if country_name == "United KingdomUK":
+                country_name = "United Kingdom"
+
+            if country_name == "North MacedoniaNorth MacedoniaN.Macedonia":
+                country_name = "North Macedonia"
+                           
             page_url = song_artist.find('a')['href']
 
             if televotes and juryvotes:
@@ -178,7 +191,7 @@ class Scraper():
                 c.points_tele_final = televotes
                 c.points_jury_final = juryvotes 
             else:
-                c.sf_num = self.get_sf_num(contest_round)
+                c.sf_num = int(self.get_sf_num(contest_round))
                 c.running_sf = running
                 c.place_sf = place
                 c.points_sf = points
@@ -232,6 +245,7 @@ class Scraper():
 
 
             # Get composers (rewrite this...)
+            tmp = []
             composers = soup.find('h4', class_='label', text=re.compile("COMPOSERS?"))
             if composers is None:
                 composers = soup.find('h4', class_='label', text=re.compile("SONGWRITERS?"))
@@ -243,6 +257,7 @@ class Scraper():
             contestant.composers = tmp
             
             lyricists = soup.find('h4', class_='label', text=re.compile("LYRICISTS?"))
+            tmp = []
             if lyricists:
                 lyricists = lyricists.parent.find('ul').find_all('li', recursive=False)
                 tmp = []
