@@ -44,11 +44,11 @@ class Scraper():
 
     def get_sf_num(self, sf):
         if sf == 'semi-final':
-            return 0
+            return str(0)
         if sf == 'semi-final-1':
-            return 1
+            return str(1)
         if sf == 'semi-final-2':
-            return 2
+            return str(2)
 
     def get_from_to_country_in_dict(self, from_country, to_country, d):
         if not d:
@@ -114,22 +114,7 @@ class Scraper():
 
         return votes_dict
 
-    def scrape_year(self, contest, contest_round):
-
-
-        if contest_round == 'final':
-            url = 'https://eurovisionworld.com/eurovision/{}'.format(contest.year)
-        else:
-            url = 'https://eurovisionworld.com/eurovision/{}/{}'.format(contest.year, contest_round)
-
-        self.driver.get(url)
-        self.soup = BeautifulSoup(self.driver.page_source, features='html.parser')
-        voting_table = self.soup.find('div', {'id': 'voting_table'})
-        if not voting_table:
-            return None
-
-        
-        rows = voting_table.find('table').find('tbody').findAll('tr')
+    def get_contestants(self, contest, contest_round, rows, qualified=True):
         for row in rows:
             cols = row.find_all('td')
 
@@ -184,21 +169,50 @@ class Scraper():
                 c = Contestant(contest.year, country, artist, song, page_url)
                 contest.contestants[contestant_key] = c
 
-            if contest_round == 'final':
-                c.running_final = running
-                c.place_final = place
-                c.points_final = points
-                c.points_tele_final = televotes
-                c.points_jury_final = juryvotes 
+            if qualified:
+                if contest_round == 'final':
+                    c.running_final = running
+                    c.place_contest = place # place in contest = place in final
+                    c.place_final = place
+                    c.points_final = points
+                    c.points_tele_final = televotes
+                    c.points_jury_final = juryvotes 
+                else:
+                    c.sf_num = self.get_sf_num(contest_round)
+                    c.running_sf = running
+                    c.place_sf = place
+                    c.points_sf = points
+                    c.points_tele_sf = televotes
+                    c.points_jury_sf = juryvotes
             else:
-                c.sf_num = int(self.get_sf_num(contest_round))
-                c.running_sf = running
-                c.place_sf = place
-                c.points_sf = points
-                c.points_tele_sf = televotes
-                c.points_jury_sf = juryvotes
+                c.place_contest = place
 
-            print(contest.year, c.country.name, contest_round)
+            print(contest.year, c.country.name, contest_round if qualified else f"{contest_round} Non qualified")
+        return contest
+
+    def scrape_year(self, contest, contest_round):
+
+
+        if contest_round == 'final':
+            url = 'https://eurovisionworld.com/eurovision/{}'.format(contest.year)
+        else:
+            url = 'https://eurovisionworld.com/eurovision/{}/{}'.format(contest.year, contest_round)
+
+        self.driver.get(url)
+        self.soup = BeautifulSoup(self.driver.page_source, features='html.parser')
+        voting_table = self.soup.find('div', {'id': 'voting_table'})
+        if not voting_table:
+            return None
+
+        # Qualified countries 
+        rows = voting_table.findAll('table')[0].find('tbody').findAll('tr')
+        contest = self.get_contestants(contest, contest_round, rows)
+        
+        # Non-qualified countries, only for final ranking (place in contest)
+        if len(voting_table.findAll("table")) > 1:
+            rows = voting_table.findAll('table')[1].find('tbody').findAll('tr')
+            contest = self.get_contestants(contest, contest_round, rows, qualified=False)
+
 
         # Tele/jury votes were implemented in 2016
         tele_votes = None

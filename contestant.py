@@ -4,6 +4,7 @@ class Contestant():
     def __init__(self, year, country, performer, song, page_url,
                  running_final=None, running_sf=None,
                  sf_num=None,
+                 place_contest=None,
                  place_final=None, points_final=None,
                  place_sf=None, points_sf=None,
                  points_tele_final=None, points_jury_final=None,
@@ -24,6 +25,7 @@ class Contestant():
         self.running_sf = running_sf
 
         # All possible places and points
+        self.place_contest = place_contest
         self.place_final = place_final
         self.points_final = points_final
         self.place_sf = place_sf

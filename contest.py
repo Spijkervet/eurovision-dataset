@@ -1,5 +1,5 @@
 from collections import defaultdict
-
+from utils import cast_int
 
 class Contest():
     def __init__(self, year):
@@ -34,10 +34,11 @@ class Contest():
         for _, c in self.contestants.items():
             l.append([self.year, c.country.code,
                       c.country.name, c.performer, c.song,
-                      c.sf_num,
-                      c.running_final, c.running_sf,
-                      c.place_final, c.points_final, c.place_sf, c.points_sf,
-                      c.points_tele_final, c.points_jury_final, c.points_tele_sf, c.points_jury_sf,
+                      cast_int(c.place_contest),
+                      cast_int(c.sf_num),
+                      cast_int(c.running_final), cast_int(c.running_sf),
+                      cast_int(c.place_final), cast_int(c.points_final), cast_int(c.place_sf), cast_int(c.points_sf),
+                      cast_int(c.points_tele_final), cast_int(c.points_jury_final), cast_int(c.points_tele_sf), cast_int(c.points_jury_sf),
                       ';'.join(c.composers), ';'.join(c.lyricists),
                       c.lyrics, c.youtube_url])
         return l
