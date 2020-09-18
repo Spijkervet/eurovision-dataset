@@ -1,4 +1,6 @@
 # Eurovision Song Contest Dataset
+[![DOI](https://zenodo.org/badge/214236225.svg)](https://zenodo.org/badge/latestdoi/214236225)
+
 The Eurovision Song Contest is a freely-available dataset containing metadata, contest ranking and voting data of 1562 songs that have competed in the Eurovision Song Contests. The upcoming release will also contain audio features.
 
 Every <b>year</b>, the dataset is updated with the contest's results. This release contains the contestant metadata, contest ranking and voting data of 1562 entries that participated in the Eurovision Song Contest from its first occurrence in 1956 until now. The corresponding audio for every song can be streamed through YouTube.
