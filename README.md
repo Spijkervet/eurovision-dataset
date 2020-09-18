@@ -97,7 +97,7 @@ This will create a `contestants.csv` and `votes.csv` file.
 # Cite
 ```
 @misc{spijkervet_eurovision,
-    author       = {Janne Spijkervet and John Ashley Burgoyne},
+    author       = {Janne Spijkervet},
     title        = {{The Eurovision Dataset}},
     month        = mar,
     year         = 2020,
