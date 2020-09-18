@@ -94,3 +94,16 @@ python3 main.py --start 1956 --end 2019
 
 This will create a `contestants.csv` and `votes.csv` file.
 
+# Cite
+```
+@misc{spijkervet_eurovision,
+    author       = {Janne Spijkervet and John Ashley Burgoyne},
+    title        = {{The Eurovision Dataset}},
+    month        = mar,
+    year         = 2020,
+    doi          = {10.5281/zenodo.4036457},
+    version      = {1.0},
+    publisher    = {Zenodo},
+    url          = {https://zenodo.org/badge/latestdoi/214236225}
+}
+```
