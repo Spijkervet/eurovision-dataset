@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common import keys
 import re
+import time
 from collections import defaultdict
 
 from country import Country
@@ -64,8 +65,16 @@ class Scraper():
     def scrape_votes(self, contest, table_data_attrib=None):
         votes_dict = defaultdict(lambda: defaultdict(int))
 
+        time.sleep(3)
+
         # Create the voting table for the contest
-        voting_grid = self.soup.find('div', {'id': 'voting_grid'})
+        voting_grid = self.soup.find('table', {'class': 'scoreboard_table'})
+        with open("output1.html", "w") as file:
+            file.write(str(self.soup))
+        exit()
+        if voting_grid is None:
+            return votes_dict
+
         if not voting_grid.contents:
             return votes_dict
 
@@ -121,14 +130,15 @@ class Scraper():
             # Tele/jury votes were implemented in 2016
             televotes = None
             juryvotes = None
-            if len(cols) == 6:
-                place, flag, country, song_artist, points, running = cols
-            if len(cols) == 8:
-                place, flag, country, song_artist, points, televotes, juryvotes, running = cols
 
-            place = place.text.rstrip()
+            if len(cols) == 5:
+                place_flag, country, song_artist, points, running = cols
+            if len(cols) == 7:
+                place_flag, country, song_artist, points, televotes, juryvotes, running = cols
+
+            place = place_flag.find("b").text.rstrip()
             country_name = country.text.rstrip('.')
-            country_id = flag.find('img')['alt'].rstrip()
+            country_id = None
             song = song_artist.find('a').text
             artist = song_artist.find('span').text.rstrip()
             song = song.replace(artist, '').rstrip()
