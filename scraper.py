@@ -84,7 +84,7 @@ class Scraper():
             btn.send_keys(keys.Keys.SPACE)
 
             soup = BeautifulSoup(self.driver.page_source, features='html.parser')
-            voting_grid = soup.find('div', {'id': 'voting_grid'})
+            voting_grid = soup.find('table', {'class': 'scoreboard_table'})
 
         if len(voting_grid.text) > 0:
 
@@ -107,7 +107,7 @@ class Scraper():
                 country_id = cols[2]['data-to']
                 # total_points = cols[3].text
 
-                points_cols = cols[4:]
+                points_cols = cols[4:-1]
                 for p in points_cols:
                     from_country_id = p['data-from']
                     to_country_id = p['data-to']

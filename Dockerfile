@@ -18,7 +18,7 @@ ENV DISPLAY=:99
 RUN pip install --upgrade pip
 
 # install selenium
-RUN pip install selenium bs4 pandas youtube-dl
+RUN pip install selenium==3.141.0 bs4 pandas youtube-dl
 
 # essentia music extractor
 RUN wget ftp://ftp.acousticbrainz.org/pub/acousticbrainz/essentia-extractor-v2.1_beta2-linux-x86_64.tar.gz
