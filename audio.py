@@ -1,13 +1,15 @@
 import os
 import subprocess
 import pandas as pd
-import youtube_dl
+import yt_dlp 
 
 audio_dir = 'audio'
 if not os.path.exists(audio_dir):
     os.makedirs(audio_dir)
 
 contestants = pd.read_csv('contestants.csv')
+contestants = contestants[contestants["year"] == 2023]
+
 for i, r in contestants.iterrows():
     destination_dir = os.path.join(audio_dir, str(r['year']))
     if not os.path.exists(destination_dir):
@@ -28,12 +30,12 @@ for i, r in contestants.iterrows():
                 'postprocessors': [{
                     'key': 'FFmpegExtractAudio',
                     'preferredcodec': 'mp3',
-                    'preferredquality': '192',
+                    'preferredquality': '320',
                 }],
             }
 
             try:
-                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     ydl.download([youtube_url])
             except Exception as e:
                 print(e)
