@@ -128,9 +128,6 @@ def prepare_inputs_targets(data_dir):
     for ty in train_years:
         assert ty not in valid_years
 
-    print(train_years)
-    print(valid_years)
-
     train_dataset = new_df[new_df["year"].isin(train_years)]
     valid_dataset = new_df[new_df["year"].isin(valid_years)]
     return train_dataset, valid_dataset

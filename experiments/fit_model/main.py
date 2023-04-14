@@ -67,6 +67,12 @@ class DrawsModule(pl.LightningModule):
         self.log("l1/valid", loss["l1"], prog_bar=True)
         return loss["loss"]
 
+    def test_step(self, batch, batch_idx):
+        loss = self.step(batch)
+        self.log("loss/valid", loss["loss"])
+        self.log("l1/valid", loss["l1"])
+        return loss["loss"]
+
     def configure_optimizers(self):
         return torch.optim.Adam(
             self.parameters(),
@@ -91,14 +97,19 @@ if __name__ == "__main__":
         val_dataset, batch_size=batch_size, num_workers=4, shuffle=False
     )
 
+
     trainer = pl.Trainer(
         accelerator="auto",
         max_epochs=100,
         callbacks=[EarlyStopping(monitor="loss/valid", mode="min")],
     )
-    model = DrawsModule(n_features=512)
+    module = DrawsModule(n_features=512)
 
+    years = valid_dataset["year"].unique().tolist()
+    logger.warn(f"Validation years: {years}")
     logger.warn(
         f"Train dataset: {len(train_dataset)}, Valid dataset: {len(val_dataset)}"
     )
-    trainer.fit(model, train_loader, val_loader)
+    trainer.fit(module, train_loader, val_loader)
+
+    trainer.test(module, val_loader)
