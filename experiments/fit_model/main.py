@@ -69,8 +69,8 @@ class DrawsModule(pl.LightningModule):
 
     def test_step(self, batch, batch_idx):
         loss = self.step(batch)
-        self.log("loss/valid", loss["loss"])
-        self.log("l1/valid", loss["l1"])
+        self.log("loss/test", loss["loss"])
+        self.log("l1/test", loss["l1"])
         return loss["loss"]
 
     def configure_optimizers(self):
