@@ -46,13 +46,13 @@ def prepare_draws(df):
     return draws
 
 
-if __name__ == "__main__":
-    DATA_DIR = "./data/draws_dataset/"
-    os.makedirs(DATA_DIR, exist_ok=True)
-    features = pd.read_csv("data/eurovision_tune_plus.csv", index_col="Unnamed: 0")
+def prepare_inputs_targets(data_dir):
+    features = pd.read_csv(
+        os.path.join(data_dir, "eurovision_tune_plus.csv"), index_col="Unnamed: 0"
+    )
     features = prepare_features(features)
 
-    stan_contestants = pd.read_csv("data/stan-contestants.csv")
+    stan_contestants = pd.read_csv(os.path.join(data_dir, "stan-contestants.csv"))
 
     merged_df = pd.merge(
         features,
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     merged_df = merged_df.dropna(subset=["stan_contestant"])
 
     # draws
-    draws = pd.read_csv("data/contest-draws.csv")
+    draws = pd.read_csv(os.path.join(data_dir, "contest-draws.csv"))
     draws = prepare_draws(draws)
     merged_df = pd.merge(
         merged_df,
@@ -76,32 +76,41 @@ if __name__ == "__main__":
     )
     print("Missing datapoints: {}".format(merged_df["stan_contestant"].isna().sum()))
 
-    inputs = []
-    targets = []
+    new_df = []
     for idx, row in tqdm(merged_df.iterrows(), total=merged_df.shape[0]):
         for draw in row["draws"]:
-            inputs.append(row["features"])
-            targets.append(draw)
+            d = {}
+
+            d["inputs"] = row["features"]
+            d["targets"] = draw
+            d["year"] = row["year"]
+            new_df.append(d)
 
     # Check if the above for loop made the correct mapping
-    assert inputs[0] == merged_df.iloc[0]["features"]
-    assert targets[0] == merged_df.iloc[0]["draws"][0]
-    assert inputs[10] == merged_df.iloc[0]["features"]
-    assert targets[10] == merged_df.iloc[0]["draws"][10]
+    assert new_df[0]["inputs"] == merged_df.iloc[0]["features"]
+    assert new_df[0]["targets"] == merged_df.iloc[0]["draws"][0]
+    assert new_df[10]["inputs"] == merged_df.iloc[0]["features"]
+    assert new_df[10]["targets"] == merged_df.iloc[0]["draws"][10]
 
-    assert inputs[4000] == merged_df.iloc[1]["features"]
-    assert targets[4000] == merged_df.iloc[1]["draws"][0]
-    assert inputs[8005] == merged_df.iloc[2]["features"]
-    assert targets[8005] == merged_df.iloc[2]["draws"][5]
+    assert new_df[4000]["inputs"] == merged_df.iloc[1]["features"]
+    assert new_df[4000]["targets"] == merged_df.iloc[1]["draws"][0]
+    assert new_df[8005]["inputs"] == merged_df.iloc[2]["features"]
+    assert new_df[8005]["targets"] == merged_df.iloc[2]["draws"][5]
 
-    with open(os.path.join(DATA_DIR, "inputs.p"), "wb") as f:
-        pickle.dump(inputs, f)
+    new_df = pd.DataFrame(new_df)
+    years = new_df["year"].unique()
 
-    with open(os.path.join(DATA_DIR, "targets.p"), "wb") as f:
-        pickle.dump(targets, f)
+    valid_years = [1978, 1984, 1995, 2002, 2013, 2019]
+    train_years = list(set(years) - set(valid_years))
 
-    # for idx, (i, t) in enumerate(tqdm(zip(inputs, targets), total=len(inputs))):
-    #     i = torch.tensor(i)
-    #     t = torch.tensor(t)
-    #     d = {"inputs": i, "targets": t}
-    #     torch.save(d, os.path.join(DATA_DIR, f"{idx}.pt"))
+    train_dataset = new_df[new_df["year"].isin(train_years)]
+    valid_dataset = new_df[new_df["year"].isin(valid_years)]
+    return train_dataset, valid_dataset
+
+
+if __name__ == "__main__":
+    data_dir = "data"
+    train_dataset, valid_dataset = prepare_inputs_targets(data_dir)
+
+    train_dataset.to_pickle(os.path.join(data_dir, "train.p"))
+    valid_dataset.to_pickle(os.path.join(data_dir, "valid.p"))
