@@ -1,3 +1,4 @@
+import logging
 import os
 import pickle
 
@@ -5,7 +6,10 @@ import lightning.pytorch as pl
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from lightning.pytorch.callbacks.early_stopping import EarlyStopping
 from torch.utils.data import DataLoader, Dataset, random_split
+
+logger = logging.getLogger(__name__)
 
 
 class DrawsDataset(Dataset):
@@ -33,7 +37,13 @@ class DrawsModule(pl.LightningModule):
     def __init__(self, n_features: int, lr: float = 3e-4):
         super().__init__()
         self.save_hyperparameters()
-        self.model = nn.Linear(n_features, 1)
+        self.model = nn.Sequential(
+            nn.Linear(n_features, 1024),
+            nn.ReLU(),
+            nn.Linear(1024, 256),
+            nn.ReLU(),
+            nn.Linear(256, 1),
+        )
         self.criterion = nn.MSELoss()
 
     def forward(self, x):
@@ -42,17 +52,24 @@ class DrawsModule(pl.LightningModule):
     def step(self, batch):
         x, y = batch
         y_hat = self(x)
-        return self.criterion(y_hat.squeeze(dim=1), y)
+        y_hat = y_hat.squeeze(dim=1)
+        loss = self.criterion(y_hat, y)
+        return {
+            "loss": loss,
+            "l1": F.l1_loss(y_hat, y),
+        }
 
     def training_step(self, batch, batch_idx):
         loss = self.step(batch)
-        self.log("loss/train", loss, prog_bar=True)
-        return loss
+        self.log("loss/train", loss["loss"], prog_bar=True)
+        self.log("l1/train", loss["l1"], prog_bar=True)
+        return loss["loss"]
 
     def validation_step(self, batch, batch_idx):
         loss = self.step(batch)
-        self.log("loss/valid", loss, prog_bar=True)
-        return loss
+        self.log("loss/valid", loss["loss"], prog_bar=True)
+        self.log("l1/valid", loss["l1"], prog_bar=True)
+        return loss["loss"]
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.hparams.lr)
@@ -74,7 +91,14 @@ if __name__ == "__main__":
         val_dataset, batch_size=batch_size, num_workers=4, shuffle=False
     )
 
-    trainer = pl.Trainer(accelerator="auto", max_epochs=1)
+    trainer = pl.Trainer(
+        accelerator="auto",
+        max_epochs=100,
+        callbacks=[EarlyStopping(monitor="loss/valid", mode="min")],
+    )
     model = DrawsModule(n_features=512)
 
+    logger.warn(
+        f"Train dataset: {len(train_dataset)}, Valid dataset: {len(val_dataset)}"
+    )
     trainer.fit(model, train_loader, val_loader)
