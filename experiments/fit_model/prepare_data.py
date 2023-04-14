@@ -3,6 +3,7 @@ import os
 import pandas as pd
 import torch
 import pickle
+import random
 from torch.utils.data import TensorDataset
 from tqdm import tqdm
 
@@ -44,6 +45,27 @@ def prepare_draws(df):
     draws["draws"] = draws.apply(draws_vec, axis=1)
     draws = draws[["draws", "stan_contestant"]]
     return draws
+
+
+def get_valid_years():
+    """Between 1975 and 2023 (minus 2020, cancelled, and 2023), we sample 2 years per
+    decade as our validation data"""
+
+    seventies = list(range(1975, 1980))
+    eighties = list(range(1980, 1990))
+    nineties = list(range(1990, 2000))
+    zeros = list(range(2000, 2010))
+    twentytens = list(range(2010, 2020))
+    twentytwentytwos = list(range(2021, 2023))
+
+    return (
+        random.choices(seventies, k=2)
+        + random.choices(eighties, k=2)
+        + random.choices(nineties, k=2)
+        + random.choices(zeros, k=2)
+        + random.choices(twentytens, k=2)
+        + random.choices(twentytwentytwos, k=2)
+    )
 
 
 def prepare_inputs_targets(data_dir):
@@ -100,8 +122,14 @@ def prepare_inputs_targets(data_dir):
     new_df = pd.DataFrame(new_df)
     years = new_df["year"].unique()
 
-    valid_years = [1978, 1984, 1995, 2002, 2013, 2019]
+    valid_years = get_valid_years()
     train_years = list(set(years) - set(valid_years))
+
+    for ty in train_years:
+        assert ty not in valid_years
+
+    print(train_years)
+    print(valid_years)
 
     train_dataset = new_df[new_df["year"].isin(train_years)]
     valid_dataset = new_df[new_df["year"].isin(valid_years)]
