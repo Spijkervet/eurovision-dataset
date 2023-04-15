@@ -35,12 +35,14 @@ class DrawsModule(pl.LightningModule):
     def __init__(
         self,
         n_features: int,
-        lr: float = 3e-6,
-        weight_decay=1e-4,
+        lr: float = 3e-7,
+        weight_decay=1e-2,
     ):
         super().__init__()
         self.save_hyperparameters()
         self.model = nn.Sequential(
+            nn.Linear(n_features, n_features),
+            nn.ReLU(),
             nn.Linear(n_features, 1),
         )
         self.criterion = nn.MSELoss()
@@ -103,7 +105,7 @@ if __name__ == "__main__":
         max_epochs=100,
         callbacks=[EarlyStopping(monitor="loss/valid", mode="min")],
     )
-    module = DrawsModule(n_features=512)
+    module = DrawsModule(n_features=1024)
 
     years = valid_dataset["year"].unique().tolist()
     logger.warn(f"Validation years: {years}")

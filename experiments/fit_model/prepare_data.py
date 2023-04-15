@@ -6,9 +6,10 @@ import pickle
 import random
 from torch.utils.data import TensorDataset
 from tqdm import tqdm
+from glob import glob
 
 
-def prepare_features(df):
+def prepare_tune_features(df):
     # fixes
     df.loc[df["year"] == "Azerbaijan_Running Scared_Ell", "year"] = 2011
 
@@ -69,11 +70,21 @@ def get_valid_years():
 
 
 def prepare_inputs_targets(data_dir):
-    features = pd.read_csv(
-        os.path.join(data_dir, "eurovision_tune_plus.csv"), index_col="Unnamed: 0"
-    )
-    features = prepare_features(features)
+    # features = pd.read_csv(
+    #     os.path.join(data_dir, "eurovision_tune_plus.csv"), index_col="Unnamed: 0"
+    # )
+    # features = prepare_tune_features(features)
 
+    dicts = glob("mert_features/*.p")
+    ds = []
+    for d in dicts:
+        with open(d, "rb") as f:
+            ds.append(pickle.load(f))
+
+    features = pd.DataFrame(ds)
+    features.loc[features["country"] == "United KingdomUK", "country"] = "United Kingdom"
+    features.loc[features["country"] == "North MacedoniaNorth MacedoniaN.Macedonia", "country"] = "North Macedonia"
+    features.loc[features["country"] == "Serbia & Montenegro", "country"] = "Serbia and Montenegro"
     stan_contestants = pd.read_csv(os.path.join(data_dir, "stan-contestants.csv"))
 
     merged_df = pd.merge(
@@ -109,14 +120,14 @@ def prepare_inputs_targets(data_dir):
             new_df.append(d)
 
     # Check if the above for loop made the correct mapping
-    assert new_df[0]["inputs"] == merged_df.iloc[0]["features"]
+    assert all(new_df[0]["inputs"] == merged_df.iloc[0]["features"])
     assert new_df[0]["targets"] == merged_df.iloc[0]["draws"][0]
-    assert new_df[10]["inputs"] == merged_df.iloc[0]["features"]
+    assert all(new_df[10]["inputs"] == merged_df.iloc[0]["features"])
     assert new_df[10]["targets"] == merged_df.iloc[0]["draws"][10]
 
-    assert new_df[4000]["inputs"] == merged_df.iloc[1]["features"]
+    assert all(new_df[4000]["inputs"] == merged_df.iloc[1]["features"])
     assert new_df[4000]["targets"] == merged_df.iloc[1]["draws"][0]
-    assert new_df[8005]["inputs"] == merged_df.iloc[2]["features"]
+    assert all(new_df[8005]["inputs"] == merged_df.iloc[2]["features"])
     assert new_df[8005]["targets"] == merged_df.iloc[2]["draws"][5]
 
     new_df = pd.DataFrame(new_df)
