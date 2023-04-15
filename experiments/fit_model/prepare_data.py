@@ -6,6 +6,7 @@ import pickle
 import random
 from torch.utils.data import TensorDataset
 from tqdm import tqdm
+import numpy as np
 from glob import glob
 
 
@@ -113,10 +114,10 @@ def prepare_inputs_targets(data_dir):
     for idx, row in tqdm(merged_df.iterrows(), total=merged_df.shape[0]):
         for draw in row["draws"]:
             d = {}
-
             d["inputs"] = row["features"]
             d["targets"] = draw
             d["year"] = row["year"]
+            d["country_x"] = row["country_x"]
             new_df.append(d)
 
     # Check if the above for loop made the correct mapping
@@ -131,8 +132,9 @@ def prepare_inputs_targets(data_dir):
     assert new_df[8005]["targets"] == merged_df.iloc[2]["draws"][5]
 
     new_df = pd.DataFrame(new_df)
-    years = new_df["year"].unique()
 
+    ## split 1: on years/decades
+    years = new_df["year"].unique()
     valid_years = get_valid_years()
     train_years = list(set(years) - set(valid_years))
 
@@ -141,6 +143,18 @@ def prepare_inputs_targets(data_dir):
 
     train_dataset = new_df[new_df["year"].isin(train_years)]
     valid_dataset = new_df[new_df["year"].isin(valid_years)]
+
+    ## split 2: on countries
+    # countries = new_df["country_x"].unique().tolist()
+    # train_countries = random.choices(countries, k=int(len(countries) * 0.8))
+    # valid_countries = list(set(countries) - set(train_countries))
+
+    # for c in valid_countries:
+    #     assert c not in train_countries
+
+    # train_dataset = new_df[new_df["country_x"].isin(train_countries)]
+    # valid_dataset = new_df[new_df["country_x"].isin(valid_countries)]
+
     return train_dataset, valid_dataset
 
 

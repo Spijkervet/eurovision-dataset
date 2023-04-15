@@ -35,14 +35,12 @@ class DrawsModule(pl.LightningModule):
     def __init__(
         self,
         n_features: int,
-        lr: float = 3e-7,
-        weight_decay=1e-2,
+        lr: float = 3e-4,
+        weight_decay=1e-1,
     ):
         super().__init__()
         self.save_hyperparameters()
         self.model = nn.Sequential(
-            nn.Linear(n_features, n_features),
-            nn.ReLU(),
             nn.Linear(n_features, 1),
         )
         self.criterion = nn.MSELoss()
@@ -84,7 +82,7 @@ class DrawsModule(pl.LightningModule):
 
 
 if __name__ == "__main__":
-    batch_size = 2048
+    batch_size = 4096
 
     data_dir = "data"
     train_dataset, valid_dataset = prepare_inputs_targets(data_dir)
@@ -102,7 +100,7 @@ if __name__ == "__main__":
 
     trainer = pl.Trainer(
         accelerator="auto",
-        max_epochs=100,
+        max_epochs=15,
         callbacks=[EarlyStopping(monitor="loss/valid", mode="min")],
     )
     module = DrawsModule(n_features=1024)
