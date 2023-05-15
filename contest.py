@@ -12,7 +12,8 @@ class Contest:
         self.countries = {}
         self.votes = {}
 
-    def add_contestant_to_contest(self, contest_round, country, artist, song, page_url):
+    def add_contestant_to_contest(self, contest_round, country, artist, song,
+                                  page_url):
         contestant_key = "{}_{}_{}".format(self.year, country.name, artist)
 
         if contestant_key in self.contestants.keys():
@@ -58,9 +59,9 @@ class Contest:
                     )
         return l
 
-    def contestants_to_list(self):
+    def contestants_to_list(self, round):
         l = []
-        for _, c in self.contestants.items():
+        for _, c in self.contestants[round].items():
             l.append(
                 [
                     self.year,

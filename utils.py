@@ -7,7 +7,7 @@ def read_csv(fp):
     return pd.read_csv(fp)
 
 
-def to_csv(contest):
+def to_csv(contest, round):
     # all_votes = [votes for c in contests for votes in c.votes_to_list()]
     all_votes = contest.votes_to_list()
     df = pd.DataFrame(
@@ -25,12 +25,13 @@ def to_csv(contest):
         ],
     )
 
-    if not os.path.exists("votes.csv"):
-        df.to_csv("votes.csv", index=False)
+    out_fname = f'votes_{round}.csv'
+    if not os.path.exists(out_fname):
+        df.to_csv(out_fname, index=False)
     else:
-        df.to_csv("votes.csv", mode="a", header=False, index=False)
+        df.to_csv(out_fname, mode="a", header=False, index=False)
 
-    all_contestants = contest.contestants_to_list()
+    all_contestants = contest.contestants_to_list(round)
     df = pd.DataFrame(
         all_contestants,
         columns=[
@@ -58,10 +59,11 @@ def to_csv(contest):
         ],
     )
 
-    if not os.path.exists("contestants.csv"):
-        df.to_csv("contestants.csv", index=False)
+    out_fname = f'contestants_{round}.csv'
+    if not os.path.exists(out_fname):
+        df.to_csv(out_fname, index=False)
     else:
-        df.to_csv("contestants.csv", mode="a", header=False, index=False)
+        df.to_csv(out_fname, mode="a", header=False, index=False)
 
 
 def cast_int(i):
@@ -74,7 +76,7 @@ def prepend_key_in_dict(d: dict, prepend_key: str):
 
 def to_dict(obj, prepend_key: str = ""):
     o = json.loads(json.dumps(obj, default=lambda o: o.__dict__))
-    if prepend_key is not "":
+    if prepend_key != "":
         if type(o) == list:
             for idx in range(len(o)):
                 o[idx] = prepend_key_in_dict(o[idx], prepend_key)

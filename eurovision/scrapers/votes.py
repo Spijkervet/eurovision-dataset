@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from selenium import webdriver
 from selenium.webdriver.common import keys
 import re
 import time
@@ -13,8 +12,11 @@ from .base import BaseScraper
 
 
 class VotesScraper(BaseScraper):
-    def __init__(self):
+
+    def __init__(self, round_delay, misc_delay):
         super().__init__()
+        self.round_delay = round_delay
+        self.misc_delay = misc_delay
 
     def get_from_to_country_in_dict(self, from_country, to_country, d):
         if not d:
@@ -147,7 +149,11 @@ class VotesScraper(BaseScraper):
             country = contest.add_country_to_contest(country_id, country_name)
 
             # Add contestant to contestant dictionary
-            contest.add_contestant_to_contest(country, artist, song, page_url)
+            c = contest.add_contestant_to_contest(contest_round,
+                                                  country,
+                                                  artist,
+                                                  song,
+                                                  page_url)
 
             if qualified:
                 if contest_round == "final":
@@ -217,9 +223,10 @@ class VotesScraper(BaseScraper):
 
         votes = Votes(contest.year, contest_round, total_votes)
         contest.votes[contest_round] = votes
+        time.sleep(self.round_delay)
         return contest
 
-    def scrape_misc(self, contest):
+    def scrape_misc(self, contest, round_name):
         def get_items_for_contestant(contestant):
             url = "https://eurovisionworld.com" + contestant.page_url
 
@@ -267,7 +274,7 @@ class VotesScraper(BaseScraper):
             contestant.lyricists = tmp
             return contestant
 
-        for _, contestant in contest.contestants.items():
+        for _, contestant in contest.contestants[round_name].items():
 
             try:
                 # Get contestant's page url
@@ -275,5 +282,5 @@ class VotesScraper(BaseScraper):
             except Exception as e:
                 print("Scraper is likely blocked by EurovisionWorld servers...")
                 print(e)
-                time.sleep(5)  # to avoid getting temporarily blocked from scraping
+            time.sleep(self.misc_delay)
         return contest
