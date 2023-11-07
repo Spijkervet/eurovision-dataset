@@ -25,7 +25,7 @@ To get an initial idea of the dataset, an example Jupyter Notebook is created in
 ### Easy setup
 The `run.sh` file makes it easy to either replicate the full dataset or download the latest version and extract the audio features from all the songs. By default, `sh run.sh` will run the scraper from the local Python environment.
 
-Run `sh run.sh docker` to build the Dockerfile and run the `main.py` from within the container. No additional setup should be necessary. This will replicate the dataset, both the `contestants.csv` and `votes.csv` files.
+Run `sh run.sh docker` to build the Dockerfile and run the `scrape_votes.py` from within the container. No additional setup should be necessary. This will replicate the dataset, both the `contestants.csv` and `votes.csv` files.
 
 The audio can be scraped from either within or outside the Docker container:
 ```
@@ -89,7 +89,7 @@ pip3 install -r requirements.txt
 
 Use the following command to extact the data of all Eurovision Song Contests between 1956 and 2019:
 ```
-python3 main.py --start 1956 --end 2019
+python3 scrape_votes.py --start 1956 --end 2019
 ```
 
 This will create a `contestants.csv` and `votes.csv` file.

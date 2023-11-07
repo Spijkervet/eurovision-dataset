@@ -68,7 +68,7 @@ pip3 install -r requirements.txt
 
 Use the following command to extact the data of all Eurovision Song Contests between 1956 and 2019:
 ```
-python3 main.py --start 1956 --end 2019
+python3 scrape_votes.py --start 1956 --end 2019
 ```
 
 This will create a `contestants.csv` and `votes.csv` file.

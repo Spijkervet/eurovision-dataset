@@ -35,6 +35,8 @@ class Contestant():
         self.points_tele_sf = points_tele_sf
         self.points_jury_sf = points_jury_sf
 
+        self.betting_offices = []
+
         # self.broadcaster = broadcaster
         # self.composer = composer
         # self.writer = writer
