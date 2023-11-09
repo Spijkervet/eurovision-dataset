@@ -236,10 +236,9 @@ class VotesScraper(BaseScraper):
             # Get lyrics
             lyrics = soup.find("div", class_="lyrics_div")
 
-            if lyrics is not None:
-                lyrics = "\\n\\n".join(
-                    [p.get_text(separator="\\n") for p in lyrics if p is not None]
-                )
+            lyrics = "\\n\\n".join(
+                [p.get_text(separator="\\n") for p in lyrics if p is not None]
+            )
 
             contestant.lyrics = lyrics
 
@@ -276,13 +275,18 @@ class VotesScraper(BaseScraper):
             contestant.lyricists = tmp
             return contestant
 
+        max_attempts = 5
         for contest_round in contest.contestants:
             for _, contestant in contest.contestants[contest_round].items():
-                try:
-                    # Get contestant's page url
-                    contestant = get_items_for_contestant(contestant)
-                except Exception as e:
-                    print("Scraper is likely blocked by EurovisionWorld servers...")
-                    print(e)
-                    time.sleep(5)  # to avoid getting temporarily blocked from scraping
+                n_attempts = 0
+                while n_attempts < max_attempts:
+                    try:
+                        # Get contestant's page url
+                        contestant = get_items_for_contestant(contestant)
+                        break
+                    except Exception as e:
+                        print(f"Scraper is likely blocked by EurovisionWorld servers... (Attempt {n_attempts}/{max_attempts})")
+                        print(e)
+                        n_attempts += 1
+                        time.sleep(5)  # to avoid getting temporarily blocked from scraping
         return contest
