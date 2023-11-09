@@ -60,32 +60,33 @@ class Contest:
 
     def contestants_to_list(self):
         l = []
-        for _, c in self.contestants.items():
-            l.append(
-                [
-                    self.year,
-                    c.country.code,
-                    c.country.name,
-                    c.performer,
-                    c.song,
-                    cast_int(c.place_contest),
-                    cast_int(c.sf_num),
-                    cast_int(c.running_final),
-                    cast_int(c.running_sf),
-                    cast_int(c.place_final),
-                    cast_int(c.points_final),
-                    cast_int(c.place_sf),
-                    cast_int(c.points_sf),
-                    cast_int(c.points_tele_final),
-                    cast_int(c.points_jury_final),
-                    cast_int(c.points_tele_sf),
-                    cast_int(c.points_jury_sf),
-                    ";".join(c.composers),
-                    ";".join(c.lyricists),
-                    c.lyrics,
-                    c.youtube_url,
-                ]
-            )
+        for contest_round in self.contestants:
+            for _, c in self.contestants[contest_round].items():
+                l.append(
+                    [
+                        self.year,
+                        c.country.code,
+                        c.country.name,
+                        c.performer,
+                        c.song,
+                        cast_int(c.place_contest),
+                        cast_int(c.sf_num),
+                        cast_int(c.running_final),
+                        cast_int(c.running_sf),
+                        cast_int(c.place_final),
+                        cast_int(c.points_final),
+                        cast_int(c.place_sf),
+                        cast_int(c.points_sf),
+                        cast_int(c.points_tele_final),
+                        cast_int(c.points_jury_final),
+                        cast_int(c.points_tele_sf),
+                        cast_int(c.points_jury_sf),
+                        ";".join(c.composers),
+                        ";".join(c.lyricists),
+                        c.lyrics,
+                        c.youtube_url,
+                    ]
+                )
         return l
 
     def betting_offices_to_list(self):
