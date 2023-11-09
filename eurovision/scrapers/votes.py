@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
-from selenium import webdriver
 from selenium.webdriver.common import keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import re
 import time
 from collections import defaultdict
@@ -42,8 +44,12 @@ class VotesScraper(BaseScraper):
 
         # Switch to other table for tele/jury voting
         if table_data_attrib:
-            btn = self.driver.find_element(
-                "xpath", '//button[@data-button="{}"]'.format(table_data_attrib)
+            btn = WebDriverWait(self.driver, 20.0).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "scoreboard_button_div"))
+            )
+
+            btn = btn.find_element(
+                By.XPATH, '//button[@data-button="{}"]'.format(table_data_attrib)
             )
             btn.send_keys(keys.Keys.SPACE)
 
@@ -230,10 +236,9 @@ class VotesScraper(BaseScraper):
             # Get lyrics
             lyrics = soup.find("div", class_="lyrics_div")
 
-            if lyrics is not None:
-                lyrics = "\\n\\n".join(
-                    [p.get_text(separator="\\n") for p in lyrics if p is not None]
-                )
+            lyrics = "\\n\\n".join(
+                [p.get_text(separator="\\n") for p in lyrics if p is not None]
+            )
 
             contestant.lyrics = lyrics
 
@@ -270,13 +275,18 @@ class VotesScraper(BaseScraper):
             contestant.lyricists = tmp
             return contestant
 
+        max_attempts = 5
         for contest_round in contest.contestants:
             for _, contestant in contest.contestants[contest_round].items():
-                try:
-                # Get contestant's page url
-                    contestant = get_items_for_contestant(contestant)
-                except Exception as e:
-                    print("Scraper is likely blocked by EurovisionWorld servers...")
-                    print(e)
-                    time.sleep(5)  # to avoid getting temporarily blocked from scraping
+                n_attempts = 0
+                while n_attempts < max_attempts:
+                    try:
+                        # Get contestant's page url
+                        contestant = get_items_for_contestant(contestant)
+                        break
+                    except Exception as e:
+                        print(f"Scraper is likely blocked by EurovisionWorld servers... (Attempt {n_attempts}/{max_attempts})")
+                        print(e)
+                        n_attempts += 1
+                        time.sleep(5)  # to avoid getting temporarily blocked from scraping
         return contest

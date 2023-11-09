@@ -12,14 +12,21 @@ def get_contest(y, rounds, max_attempts: int = 5):
         if n_attempts > max_attempts:
             raise Exception(f"Could not scrape {y} {rounds} in {n_attempts} attempts")
 
-        contest = Contest(y)
-        for r in rounds:
-            print(f"Scraping: Eurovision Song Contest {y} {r} (attempt {n_attempts}/{max_attempts})")
-            contest = scraper.scrape_year(contest, r)
+        try:
+            contest = Contest(y)
+            for r in rounds:
+                print(
+                    f"Scraping: Eurovision Song Contest {y} {r} (attempt {n_attempts}/{max_attempts})"
+                )
+                contest = scraper.scrape_year(contest, r)
 
-        if contest is None:
+            if contest is None:
+                time.sleep(5)
+
+        except Exception as e:
+            print(f"Failed {y} {r} (attempt {n_attempts}/{max_attempts})")
+            print(e)
             time.sleep(5)
-
         n_attempts += 1
 
     contest = scraper.scrape_misc(contest)
@@ -37,7 +44,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--end",
         type=int,
-        default=2020,
+        default=2023,
         help="End year range of the Eurovision Song Contest",
     )
     args = parser.parse_args()
