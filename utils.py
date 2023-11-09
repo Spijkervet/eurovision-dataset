@@ -74,7 +74,7 @@ def prepend_key_in_dict(d: dict, prepend_key: str):
 
 def to_dict(obj, prepend_key: str = ""):
     o = json.loads(json.dumps(obj, default=lambda o: o.__dict__))
-    if prepend_key is not "":
+    if prepend_key != "":
         if type(o) == list:
             for idx in range(len(o)):
                 o[idx] = prepend_key_in_dict(o[idx], prepend_key)

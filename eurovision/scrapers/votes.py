@@ -147,7 +147,9 @@ class VotesScraper(BaseScraper):
             country = contest.add_country_to_contest(country_id, country_name)
 
             # Add contestant to contestant dictionary
-            contest.add_contestant_to_contest(country, artist, song, page_url)
+            c = contest.add_contestant_to_contest(
+                contest_round, country, artist, song, page_url
+            )
 
             if qualified:
                 if contest_round == "final":
@@ -175,7 +177,6 @@ class VotesScraper(BaseScraper):
         return contest
 
     def scrape_year(self, contest, contest_round):
-
         if contest_round == "final":
             url = "https://eurovisionworld.com/eurovision/{}".format(contest.year)
         else:
@@ -227,20 +228,22 @@ class VotesScraper(BaseScraper):
             soup = BeautifulSoup(self.driver.page_source, features="html.parser")
 
             # Get lyrics
-            lyrics = soup.find("div", id="lyrics_0")
+            lyrics = soup.find("div", class_="lyrics_div")
 
-            lyrics = "\\n\\n".join(
-                [p.get_text(separator="\\n") for p in lyrics if p is not None]
-            )
+            if lyrics is not None:
+                lyrics = "\\n\\n".join(
+                    [p.get_text(separator="\\n") for p in lyrics if p is not None]
+                )
 
             contestant.lyrics = lyrics
 
             # Get video URL
-            video_src = soup.find("div", class_="lyrics_video_wrap").find("iframe")[
-                "src"
-            ]
-            video_id = video_src.split("/")[-1].split("?")[0]
-            youtube_url = "https://youtube.com/watch?v=" + video_id
+            youtube_url = None
+            video_wrapper = soup.find("div", class_="lyrics_video_wrap")
+            if video_wrapper is not None:
+                video_src = video_wrapper.find("iframe")["src"]
+                video_id = video_src.split("/")[-1].split("?")[0]
+                youtube_url = "https://youtube.com/watch?v=" + video_id
             contestant.youtube_url = youtube_url
 
             # Get composers (rewrite this...)
@@ -267,13 +270,13 @@ class VotesScraper(BaseScraper):
             contestant.lyricists = tmp
             return contestant
 
-        for _, contestant in contest.contestants.items():
-
-            try:
+        for contest_round in contest.contestants:
+            for _, contestant in contest.contestants[contest_round].items():
+                try:
                 # Get contestant's page url
-                contestant = get_items_for_contestant(contestant)
-            except Exception as e:
-                print("Scraper is likely blocked by EurovisionWorld servers...")
-                print(e)
-                time.sleep(5)  # to avoid getting temporarily blocked from scraping
+                    contestant = get_items_for_contestant(contestant)
+                except Exception as e:
+                    print("Scraper is likely blocked by EurovisionWorld servers...")
+                    print(e)
+                    time.sleep(5)  # to avoid getting temporarily blocked from scraping
         return contest

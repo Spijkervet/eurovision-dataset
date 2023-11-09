@@ -1,22 +1,32 @@
 import argparse
-
+import time
 from contest import Contest
 from eurovision.scrapers import VotesScraper
 from utils import to_csv
 
 
-def get_contest(y, rounds):
-    contest = Contest(y)
-    for r in rounds:
-        print("Scraping: Eurovision Song Contest {} {}".format(y, r))
-        contest = scraper.scrape_year(contest, r)
+def get_contest(y, rounds, max_attempts: int = 5):
+    contest = None
+    n_attempts = 0
+    while contest is None:
+        if n_attempts > max_attempts:
+            raise Exception(f"Could not scrape {y} {rounds} in {n_attempts} attempts")
+
+        contest = Contest(y)
+        for r in rounds:
+            print(f"Scraping: Eurovision Song Contest {y} {r} (attempt {n_attempts}/{max_attempts})")
+            contest = scraper.scrape_year(contest, r)
+
+        if contest is None:
+            time.sleep(5)
+
+        n_attempts += 1
 
     contest = scraper.scrape_misc(contest)
     return contest
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(description="Eurovision Data Scraper")
     parser.add_argument(
         "--start",

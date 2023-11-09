@@ -7,30 +7,70 @@ Every <b>year</b>, the dataset is updated with the contest's results. This relea
 
 The metadata and voting data are provided by the [EurovisionWorld](https://eurovisionworld.com) fansite.
 
-### Downloading the dataset
+## Downloading the dataset
 The dataset can be downloaded [here](https://github.com/Spijkervet/eurovision_dataset/releases). To replicate it, follow the instructions at the bottom of the readme.
+
+## Analysis and extended jury results
+
+John Ashley Burgoyne, Janne Spijkervet, and David John Baker extended this dataset with jury-level data, new audio features, and statistical analyses for [ISMIR 2023](https://ismir2023program.ismir.net/poster_276.html). You can access their data and code at [this repository](https://github.com/Amsterdam-Music-Lab/mirovision).
 
 #### Audio
 With the `contestants.csv` in the same folder as the `audio.py` file, the YouTube audio streams of all songs can be collected by running `python3 audio.py`. Alternatively, `sh run.sh audio` or `sh run.sh docker audio` can be used to scrape locally or use a Docker container to scrape the streams.
 
 
 ### Using the dataset in your research paper?
-Please contact janne [dot] spijkervet [at] gmail [dot] com
+When using these materials please cite the following resources. *I am also interested to hear about projects building on this work, feel free to send an e-mail to: janne [dot] spijkervet [at] gmail [dot] com*
+
+```
+@inproceedings{burgoyne_mirovision,
+    author       = {John Ashley Burgoyne and Janne Spijkervet and David John Baker},
+    title        = {Measuring the {Eurovision Song Contest}: A Living Dataset for Real-World {MIR}},
+    booktitle    = {Proceedings of the 24th International Society for Music Information Retrieval Conference},
+    year         = 2023,
+    address      = {Milan, Italy},
+    url          = {https://archives.ismir.net/ismir2023/paper/000097.pdf}
+}
+
+@misc{spijkervet_eurovision,
+    author       = {Janne Spijkervet},
+    title        = {{The Eurovision Dataset}},
+    month        = mar,
+    year         = 2020,
+    doi          = {10.5281/zenodo.4036457},
+    version      = {1.0},
+    publisher    = {Zenodo},
+    url          = {https://zenodo.org/badge/latestdoi/214236225}
+}
+```
 
 
 ## How to get started
-To get an initial idea of the dataset, an example Jupyter Notebook is created in the `examples` directory. This can be opened with `jupyter notebook`. To replacite the dataset, see below or:
+To get an initial idea of the dataset, an example Jupyter Notebook is created in the `examples` directory. This can be opened with `jupyter notebook`. To replicate the dataset, see below:
 
 
-### Easy setup
-The `run.sh` file makes it easy to either replicate the full dataset or download the latest version and extract the audio features from all the songs. By default, `sh run.sh` will run the scraper from the local Python environment.
+### Download from source
+You can download the entire dataset using the scraping code included in this repository. This will attempt to fetch and process the data from the [EurovisionWorld](https://eurovisionworld.com) website into the csv files that are also made available in the release section of this repository:
 
-Run `sh run.sh docker` to build the Dockerfile and run the `scrape_votes.py` from within the container. No additional setup should be necessary. This will replicate the dataset, both the `contestants.csv` and `votes.csv` files.
+- `votes.csv`
+- `contestants.csv`
+- `betting_offices.csv`
 
-The audio can be scraped from either within or outside the Docker container:
+```bash
+pip3 install -r requirements.txt
+
+# will yield votes.csv and contestants.csv
+python3 scrape_votes.py
+
+# will yield betting_offices.csv
+python3 scrape_odds.py
 ```
-sh run.sh docker audio
-sh run.sh audio
+
+Run `sh run.sh docker` to build the Dockerfile and run the `scrape_votes.py` from within the container. No additional setup should be necessary. This will replicate the dataset, both the `contestants.csv`, `votes.csv` and `betting_offices.csv` files.
+
+The audio can be additionally be fetched from either within or outside the Docker container:
+```
+bash run.sh docker audio
+bash run.sh audio
 ```
 
 
@@ -96,6 +136,15 @@ This will create a `contestants.csv` and `votes.csv` file.
 
 # Cite
 ```
+@inproceedings{burgoyne_mirovision,
+    author       = {John Ashley Burgoyne and Janne Spijkervet and David John Baker},
+    title        = {Measuring the {Eurovision Song Contest}: A Living Dataset for Real-World {MIR}},
+    booktitle    = {Proceedings of the 24th International Society for Music Information Retrieval Conference},
+    year         = 2023,
+    address      = {Milan, Italy},
+    url          = {https://archives.ismir.net/ismir2023/paper/000097.pdf}
+}
+
 @misc{spijkervet_eurovision,
     author       = {Janne Spijkervet},
     title        = {{The Eurovision Dataset}},
