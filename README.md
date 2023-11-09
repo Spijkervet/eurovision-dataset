@@ -1,9 +1,9 @@
 # Eurovision Song Contest Dataset
 [![DOI](https://zenodo.org/badge/214236225.svg)](https://zenodo.org/badge/latestdoi/214236225)
 
-The Eurovision Song Contest is a freely-available dataset containing metadata, contest ranking and voting data of 1562 songs that have competed in the Eurovision Song Contests. The upcoming release will also contain audio features.
+The Eurovision Song Contest is a freely-available dataset containing metadata, contest ranking and voting data of 1735 songs that have competed in the Eurovision Song Contests. The upcoming release will also contain audio features.
 
-Every <b>year</b>, the dataset is updated with the contest's results. This release contains the contestant metadata, contest ranking and voting data of 1562 entries that participated in the Eurovision Song Contest from its first occurrence in 1956 until now. The corresponding audio for every song can be streamed through YouTube.
+Every <b>year</b>, the dataset is updated with the contest's results. This release contains the contestant metadata, contest ranking and voting data of 1735 entries that participated in the Eurovision Song Contest from its first occurrence in 1956 until now. The corresponding audio for every song can be streamed through YouTube.
 
 The metadata and voting data are provided by the [EurovisionWorld](https://eurovisionworld.com) fansite.
 
@@ -127,9 +127,9 @@ To replicate the dataset, a WebDriver for either Chrome, Firefox, or Safari is r
 pip3 install -r requirements.txt
 ```
 
-Use the following command to extact the data of all Eurovision Song Contests between 1956 and 2019:
+Use the following command to extact the data of all Eurovision Song Contests between 1956 and 2023:
 ```
-python3 scrape_votes.py --start 1956 --end 2019
+python3 scrape_votes.py --start 1956 --end 2023
 ```
 
 This will create a `contestants.csv` and `votes.csv` file.
